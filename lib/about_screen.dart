@@ -1,11 +1,10 @@
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:stacknovax/app_theme.dart';
 import 'package:stacknovax/storage_service.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// About Screen (tabbed: About + Privacy Policy)
+// About Screen
 // ─────────────────────────────────────────────────────────────────────────────
 
 class AboutScreen extends StatefulWidget {
@@ -16,138 +15,31 @@ class AboutScreen extends StatefulWidget {
   State<AboutScreen> createState() => _AboutScreenState();
 }
 
-class _AboutScreenState extends State<AboutScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(
-      length: 2,
-      vsync: this,
-      initialIndex: widget.showPrivacy ? 1 : 0,
-    );
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
+class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(gradient: AppGradients.background),
-        child: SafeArea(
-          child: Column(
-            children: [
-              _buildTopBar(),
-              _buildTabBar(),
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    _AboutTab(),
-                    const _PrivacyPolicyTab(),
-                  ],
-                ),
-              ),
-            ],
-          ),
+    return DefaultTextStyle(
+      style: const TextStyle(
+        decoration: TextDecoration.none,
+        fontFamily: 'DM Sans',
+      ),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            const SizedBox(height: 16),
+            _buildAppCard(),
+            const SizedBox(height: 20),
+            _buildSection('HOW TO PLAY', _howToPlayItems()),
+            const SizedBox(height: 16),
+            _buildSection('LEVELS', _levelsInfo()),
+            const SizedBox(height: 16),
+            _buildSection('SCORING', _scoringInfo()),
+            const SizedBox(height: 16),
+            _buildSection('DEVELOPER', _developerInfo()),
+            const SizedBox(height: 24),
+          ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildTopBar() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: AppColors.primary.withOpacity(0.3)),
-                color: AppColors.primary.withOpacity(0.05),
-              ),
-              child: const Icon(Icons.arrow_back_ios_new,
-                  color: AppColors.primary, size: 18),
-            ),
-          ),
-          const SizedBox(width: 16),
-          const Text(
-            'INFO',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w900,
-              color: Colors.white,
-              letterSpacing: 4,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTabBar() {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.primary.withOpacity(0.1)),
-      ),
-      child: TabBar(
-        controller: _tabController,
-        labelColor: const Color(0xFF030814),
-        unselectedLabelColor: Colors.white.withOpacity(0.4),
-        labelStyle: const TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.w800,
-          letterSpacing: 2,
-        ),
-        indicator: BoxDecoration(
-          gradient: AppGradients.primaryButton,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        dividerColor: Colors.transparent,
-        tabs: const [
-          Tab(text: 'ABOUT'),
-          Tab(text: 'PRIVACY POLICY'),
-        ],
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// About Tab
-// ─────────────────────────────────────────────────────────────────────────────
-
-class _AboutTab extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          const SizedBox(height: 16),
-          _buildAppCard(),
-          const SizedBox(height: 20),
-          _buildSection('HOW TO PLAY', _howToPlayItems()),
-          const SizedBox(height: 16),
-          _buildSection('LEVELS', _levelsInfo()),
-          const SizedBox(height: 16),
-          _buildSection('SCORING', _scoringInfo()),
-          const SizedBox(height: 24),
-        ],
       ),
     );
   }
@@ -189,18 +81,25 @@ class _AboutTab extends StatelessWidget {
               ],
             ),
             child: const Center(
-              child: Text('▲',
-                  style: TextStyle(fontSize: 28, color: Color(0xFF030814))),
+              child: Text(
+                '▲',
+                style: TextStyle(
+                  fontSize: 28,
+                  color: Color(0xFF030814),
+                  decoration: TextDecoration.none,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 16),
           const Text(
-            'STACKNOVAX',
+            'StackNovaX',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w900,
               color: Colors.white,
               letterSpacing: 4,
+              decoration: TextDecoration.none,
             ),
           ),
           const SizedBox(height: 6),
@@ -210,6 +109,7 @@ class _AboutTab extends StatelessWidget {
               fontSize: 12,
               color: AppColors.primary.withOpacity(0.7),
               letterSpacing: 2,
+              decoration: TextDecoration.none,
             ),
           ),
           const SizedBox(height: 16),
@@ -223,6 +123,29 @@ class _AboutTab extends StatelessWidget {
               fontSize: 12,
               color: Colors.white.withOpacity(0.5),
               height: 1.6,
+              decoration: TextDecoration.none,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Container(height: 1, color: Colors.white.withOpacity(0.08)),
+          const SizedBox(height: 14),
+          Text(
+            'LIAME LLC',
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+              color: AppColors.primary.withOpacity(0.6),
+              letterSpacing: 3,
+              decoration: TextDecoration.none,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'geraldedwardhines1@gmail.com',
+            style: TextStyle(
+              fontSize: 11,
+              color: Colors.white.withOpacity(0.35),
+              decoration: TextDecoration.none,
             ),
           ),
         ],
@@ -263,6 +186,7 @@ class _AboutTab extends StatelessWidget {
                   fontWeight: FontWeight.w800,
                   letterSpacing: 3,
                   color: AppColors.primary.withOpacity(0.8),
+                  decoration: TextDecoration.none,
                 ),
               ),
             ],
@@ -296,11 +220,15 @@ class _AboutTab extends StatelessWidget {
                     colors: [AppColors.primary, AppColors.secondary]),
               ),
               child: Center(
-                child: Text('${e.key + 1}',
-                    style: const TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w900,
-                        color: Color(0xFF030814))),
+                child: Text(
+                  '${e.key + 1}',
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFF030814),
+                    decoration: TextDecoration.none,
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: 12),
@@ -308,18 +236,26 @@ class _AboutTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(e.value.$1,
-                      style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          letterSpacing: 1)),
+                  Text(
+                    e.value.$1,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                      letterSpacing: 1,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
                   const SizedBox(height: 2),
-                  Text(e.value.$2,
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.white.withOpacity(0.45),
-                          height: 1.4)),
+                  Text(
+                    e.value.$2,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white.withOpacity(0.45),
+                      height: 1.4,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -344,11 +280,15 @@ class _AboutTab extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
-                child: Text('${level.level}',
-                    style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w900,
-                        color: Color(0xFF030814))),
+                child: Text(
+                  '${level.level}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFF030814),
+                    decoration: TextDecoration.none,
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: 12),
@@ -356,25 +296,35 @@ class _AboutTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(level.name,
-                      style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          letterSpacing: 1)),
-                  Text(level.description,
-                      style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.white.withOpacity(0.4))),
+                  Text(
+                    level.name,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                      letterSpacing: 1,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                  Text(
+                    level.description,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Colors.white.withOpacity(0.4),
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
                 ],
               ),
             ),
             Text(
               '${level.speed.toInt()} px/s',
               style: TextStyle(
-                  fontSize: 11,
-                  color: AppColors.primary.withOpacity(0.6),
-                  fontWeight: FontWeight.w600),
+                fontSize: 11,
+                color: AppColors.primary.withOpacity(0.6),
+                fontWeight: FontWeight.w600,
+                decoration: TextDecoration.none,
+              ),
             ),
           ],
         ),
@@ -385,8 +335,8 @@ class _AboutTab extends StatelessWidget {
   List<Widget> _scoringInfo() {
     final items = [
       ('Stack a block', '+1 point'),
-      ('PERFECT placement', '+3 points total (+2 bonus)'),
-      ('Speed increases', 'Every 5 blocks stacked'),
+      ('PERFECT placement', '+3 pts (+2 bonus)'),
+      ('Speed increases', 'Every 5 blocks'),
     ];
     return items.map((item) {
       return Padding(
@@ -394,81 +344,78 @@ class _AboutTab extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(item.$1,
+            Expanded(
+              child: Text(
+                item.$1,
                 style: TextStyle(
-                    fontSize: 12, color: Colors.white.withOpacity(0.6))),
+                  fontSize: 12,
+                  color: Colors.white.withOpacity(0.6),
+                  decoration: TextDecoration.none,
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
             Container(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
               decoration: BoxDecoration(
                 color: AppColors.primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
-                border:
-                Border.all(color: AppColors.primary.withOpacity(0.2)),
+                border: Border.all(color: AppColors.primary.withOpacity(0.2)),
               ),
-              child: Text(item.$2,
-                  style: const TextStyle(
-                      fontSize: 11,
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.w700)),
+              child: Text(
+                item.$2,
+                style: const TextStyle(
+                  fontSize: 11,
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w700,
+                  decoration: TextDecoration.none,
+                ),
+              ),
             ),
           ],
         ),
       );
     }).toList();
   }
-}
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Privacy Policy Tab — loads HTML string from assets via rootBundle
-// ─────────────────────────────────────────────────────────────────────────────
+  List<Widget> _developerInfo() {
+    return [
+      _devRow('Developer', 'LIAME LLC'),
+      _devRow('Contact', 'geraldedwardhines1@gmail.com'),
 
-class _PrivacyPolicyTab extends StatefulWidget {
-  const _PrivacyPolicyTab({super.key});
-  @override State<_PrivacyPolicyTab> createState() => __PrivacyPolicyTabState();
-}
-
-class __PrivacyPolicyTabState extends State<_PrivacyPolicyTab> {
-  late final WebViewController _controller;
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(NavigationDelegate(
-        onPageFinished: (_) => setState(() => _isLoading = false),
-        onNavigationRequest: (r) =>
-        (r.url.startsWith('http') || r.url.startsWith('https'))
-            ? NavigationDecision.prevent
-            : NavigationDecision.navigate,
-      ));
-    _loadHtml();
+    ];
   }
 
-  Future<void> _loadHtml() async {
-    final html = await rootBundle.loadString('assets/privacy_policy.html');
-    await _controller.loadHtmlString(html, baseUrl: 'about:blank');
+  Widget _devRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 80,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.white.withOpacity(0.35),
+                decoration: TextDecoration.none,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 12,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                decoration: TextDecoration.none,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    backgroundColor: const Color(0xFFF7F9FF),
-    appBar: AppBar(
-      title: const Text('Privacy Policy',
-          style: TextStyle(fontFamily: 'DM Sans', fontWeight: FontWeight.w600, fontSize: 16)),
-      backgroundColor: const Color(0xFF0D47A1),
-      foregroundColor: Colors.white,
-      elevation: 0, centerTitle: true,
-    ),
-    body: Stack(children: [
-      WebViewWidget(controller: _controller),
-      if (_isLoading) const Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
-        CircularProgressIndicator(color: Color(0xFF2979FF)),
-        SizedBox(height: 12),
-        Text('Loading privacy policy…', style: TextStyle(color: Color(0xFF8898AA), fontSize: 13)),
-      ])),
-    ]),
-  );
 }

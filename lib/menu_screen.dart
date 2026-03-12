@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:stacknovax/Privacy_policy.dart';
 import 'package:stacknovax/app_theme.dart';
 import 'package:stacknovax/storage_service.dart';
 import 'game_screen.dart';
@@ -240,7 +241,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
               colors: [Color(0xFF00E5FF), Color(0xFF1DE9B6), Colors.white],
             ).createShader(bounds),
             child: const Text(
-              'STACKNOVAX',
+              'StackNovaX',
               style: TextStyle(
                 fontSize: 38,
                 fontWeight: FontWeight.w900,
@@ -264,7 +265,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         ),
       ),
       child: Text(
-        'BLOCK STACKING ARCADE  •  v1.0',
+        'BLOCK STACKING ARCADE',
         style: TextStyle(
           fontSize: 9,
           letterSpacing: 3,
@@ -442,7 +443,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
               icon: Icons.shield_outlined,
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(
-                    builder: (_) => const AboutScreen(showPrivacy: true)),
+                    builder: (_) => PrivacyPolicyScreen()),
               ),
             ),
           ),

@@ -312,7 +312,7 @@ class _SplashScreenState extends State<SplashScreen>
             colors: [Color(0xFF00E5FF), Color(0xFF1DE9B6), Color(0xFFFFFFFF)],
           ).createShader(bounds),
           child: const Text(
-            'STACKNOVAX',
+            'StackNovaX',
             style: TextStyle(
               fontSize: 42,
               fontWeight: FontWeight.w900,
