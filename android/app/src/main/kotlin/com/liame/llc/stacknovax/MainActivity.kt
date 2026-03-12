@@ -1,4 +1,4 @@
-package com.example.stacknovax
+package com.liame.llc.stacknovax
 
 import io.flutter.embedding.android.FlutterActivity
 
