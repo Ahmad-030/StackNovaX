@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stacknovax/app_theme.dart';
 import 'package:stacknovax/storage_service.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// About Screen (tabbed: About + Privacy Policy)
+// ─────────────────────────────────────────────────────────────────────────────
 
 class AboutScreen extends StatefulWidget {
   final bool showPrivacy;
@@ -46,7 +51,7 @@ class _AboutScreenState extends State<AboutScreen>
                   controller: _tabController,
                   children: [
                     _AboutTab(),
-                    _PrivacyPolicyTab(),
+                    const _PrivacyPolicyTab(),
                   ],
                 ),
               ),
@@ -122,6 +127,10 @@ class _AboutScreenState extends State<AboutScreen>
   }
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// About Tab
+// ─────────────────────────────────────────────────────────────────────────────
+
 class _AboutTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -180,10 +189,8 @@ class _AboutTab extends StatelessWidget {
               ],
             ),
             child: const Center(
-              child: Text(
-                '▲',
-                style: TextStyle(fontSize: 28, color: Color(0xFF030814)),
-              ),
+              child: Text('▲',
+                  style: TextStyle(fontSize: 28, color: Color(0xFF030814))),
             ),
           ),
           const SizedBox(height: 16),
@@ -205,22 +212,12 @@ class _AboutTab extends StatelessWidget {
               letterSpacing: 2,
             ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            'Version 1.0.0',
-            style: TextStyle(
-              fontSize: 11,
-              color: Colors.white.withOpacity(0.25),
-            ),
-          ),
           const SizedBox(height: 16),
-          Container(
-            height: 1,
-            color: Colors.white.withOpacity(0.08),
-          ),
+          Container(height: 1, color: Colors.white.withOpacity(0.08)),
           const SizedBox(height: 16),
           Text(
-            'A precision arcade game where you stack blocks as high as possible. Time your taps perfectly for PERFECT bonuses and reach legendary scores.',
+            'A precision arcade game where you stack blocks as high as possible. '
+                'Time your taps perfectly for PERFECT bonuses and reach legendary scores.',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 12,
@@ -282,9 +279,8 @@ class _AboutTab extends StatelessWidget {
       ('TAP TO STACK', 'Tap the screen to drop the moving block onto the stack.'),
       ('ALIGN PRECISELY', 'The overhanging part gets cut off — narrowing your block.'),
       ('PERFECT BONUS', 'Land within ±5px of perfect alignment for +2 bonus points.'),
-      ('DON\'T FALL', 'If the remaining width is too thin, your tower collapses.'),
+      ("DON'T FALL", 'If the remaining width is too thin, your tower collapses.'),
     ];
-
     return steps.asMap().entries.map((e) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 12),
@@ -294,21 +290,17 @@ class _AboutTab extends StatelessWidget {
             Container(
               width: 24,
               height: 24,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: const LinearGradient(
-                  colors: [AppColors.primary, AppColors.secondary],
-                ),
+                gradient: LinearGradient(
+                    colors: [AppColors.primary, AppColors.secondary]),
               ),
               child: Center(
-                child: Text(
-                  '${e.key + 1}',
-                  style: const TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w900,
-                    color: Color(0xFF030814),
-                  ),
-                ),
+                child: Text('${e.key + 1}',
+                    style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF030814))),
               ),
             ),
             const SizedBox(width: 12),
@@ -316,24 +308,18 @@ class _AboutTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    e.value.$1,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                      letterSpacing: 1,
-                    ),
-                  ),
+                  Text(e.value.$1,
+                      style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          letterSpacing: 1)),
                   const SizedBox(height: 2),
-                  Text(
-                    e.value.$2,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.white.withOpacity(0.45),
-                      height: 1.4,
-                    ),
-                  ),
+                  Text(e.value.$2,
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.white.withOpacity(0.45),
+                          height: 1.4)),
                 ],
               ),
             ),
@@ -354,19 +340,15 @@ class _AboutTab extends StatelessWidget {
               height: 32,
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [AppColors.primary, AppColors.secondary],
-                ),
+                    colors: [AppColors.primary, AppColors.secondary]),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
-                child: Text(
-                  '${level.level}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w900,
-                    color: Color(0xFF030814),
-                  ),
-                ),
+                child: Text('${level.level}',
+                    style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF030814))),
               ),
             ),
             const SizedBox(width: 12),
@@ -374,29 +356,25 @@ class _AboutTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    level.name,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                  Text(
-                    level.description,
-                    style: TextStyle(fontSize: 11, color: Colors.white.withOpacity(0.4)),
-                  ),
+                  Text(level.name,
+                      style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          letterSpacing: 1)),
+                  Text(level.description,
+                      style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.white.withOpacity(0.4))),
                 ],
               ),
             ),
             Text(
               '${level.speed.toInt()} px/s',
               style: TextStyle(
-                fontSize: 11,
-                color: AppColors.primary.withOpacity(0.6),
-                fontWeight: FontWeight.w600,
-              ),
+                  fontSize: 11,
+                  color: AppColors.primary.withOpacity(0.6),
+                  fontWeight: FontWeight.w600),
             ),
           ],
         ),
@@ -410,32 +388,29 @@ class _AboutTab extends StatelessWidget {
       ('PERFECT placement', '+3 points total (+2 bonus)'),
       ('Speed increases', 'Every 5 blocks stacked'),
     ];
-
     return items.map((item) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              item.$1,
-              style: TextStyle(fontSize: 12, color: Colors.white.withOpacity(0.6)),
-            ),
+            Text(item.$1,
+                style: TextStyle(
+                    fontSize: 12, color: Colors.white.withOpacity(0.6))),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+              padding:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
               decoration: BoxDecoration(
                 color: AppColors.primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.primary.withOpacity(0.2)),
+                border:
+                Border.all(color: AppColors.primary.withOpacity(0.2)),
               ),
-              child: Text(
-                item.$2,
-                style: const TextStyle(
-                  fontSize: 11,
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+              child: Text(item.$2,
+                  style: const TextStyle(
+                      fontSize: 11,
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w700)),
             ),
           ],
         ),
@@ -444,41 +419,56 @@ class _AboutTab extends StatelessWidget {
   }
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Privacy Policy Tab — loads HTML string from assets via rootBundle
+// ─────────────────────────────────────────────────────────────────────────────
+
 class _PrivacyPolicyTab extends StatefulWidget {
-  @override
-  State<_PrivacyPolicyTab> createState() => _PrivacyPolicyTabState();
+  const _PrivacyPolicyTab({super.key});
+  @override State<_PrivacyPolicyTab> createState() => __PrivacyPolicyTabState();
 }
 
-class _PrivacyPolicyTabState extends State<_PrivacyPolicyTab> {
-  late WebViewController _webController;
+class __PrivacyPolicyTabState extends State<_PrivacyPolicyTab> {
+  late final WebViewController _controller;
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _webController = WebViewController()
+    _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0xFF030814))
       ..setNavigationDelegate(NavigationDelegate(
-        onPageFinished: (_) {
-          if (mounted) setState(() => _isLoading = false);
-        },
-      ))
-      ..loadFlutterAsset('assets/privacy_policy.html');
+        onPageFinished: (_) => setState(() => _isLoading = false),
+        onNavigationRequest: (r) =>
+        (r.url.startsWith('http') || r.url.startsWith('https'))
+            ? NavigationDecision.prevent
+            : NavigationDecision.navigate,
+      ));
+    _loadHtml();
+  }
+
+  Future<void> _loadHtml() async {
+    final html = await rootBundle.loadString('assets/privacy_policy.html');
+    await _controller.loadHtmlString(html, baseUrl: 'about:blank');
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        WebViewWidget(controller: _webController),
-        if (_isLoading)
-          const Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
-            ),
-          ),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+    backgroundColor: const Color(0xFFF7F9FF),
+    appBar: AppBar(
+      title: const Text('Privacy Policy',
+          style: TextStyle(fontFamily: 'DM Sans', fontWeight: FontWeight.w600, fontSize: 16)),
+      backgroundColor: const Color(0xFF0D47A1),
+      foregroundColor: Colors.white,
+      elevation: 0, centerTitle: true,
+    ),
+    body: Stack(children: [
+      WebViewWidget(controller: _controller),
+      if (_isLoading) const Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
+        CircularProgressIndicator(color: Color(0xFF2979FF)),
+        SizedBox(height: 12),
+        Text('Loading privacy policy…', style: TextStyle(color: Color(0xFF8898AA), fontSize: 13)),
+      ])),
+    ]),
+  );
 }

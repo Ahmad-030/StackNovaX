@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stacknovax/app_theme.dart';
 import 'package:stacknovax/storage_service.dart';
-
 import 'game_screen.dart';
 import 'level_select_screen.dart';
 import 'highscore_screen.dart';
@@ -134,7 +133,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        AppColors.primary.withValues(alpha: 0.06 * _glowAnim.value),
+                        AppColors.primary
+                            .withValues(alpha: 0.06 * _glowAnim.value),
                         Colors.transparent,
                       ],
                     ),
@@ -192,7 +192,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.25 * _glowAnim.value),
+                    color: AppColors.primary
+                        .withValues(alpha: 0.25 * _glowAnim.value),
                     blurRadius: 40,
                     spreadRadius: 5,
                   ),
@@ -213,7 +214,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                           color: colors[i].withValues(alpha: 0.9),
                           borderRadius: BorderRadius.circular(2),
                           boxShadow: [
-                            BoxShadow(color: colors[i].withValues(alpha: 0.5), blurRadius: 4),
+                            BoxShadow(
+                                color: colors[i].withValues(alpha: 0.5),
+                                blurRadius: 4),
                           ],
                         ),
                       );
@@ -290,7 +293,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           ],
           _buildPrimaryButton(
             label: 'NEW GAME',
-            icon: _hasSavedGame ? Icons.refresh_rounded : Icons.play_arrow_rounded,
+            icon:
+            _hasSavedGame ? Icons.refresh_rounded : Icons.play_arrow_rounded,
             onTap: () => _startNewGame(1),
             gradient: _hasSavedGame
                 ? const LinearGradient(
@@ -305,7 +309,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
             icon: Icons.layers_rounded,
             onTap: () => Navigator.of(context)
                 .push(MaterialPageRoute(
-              builder: (_) => LevelSelectScreen(onLevelSelected: _startNewGame),
+              builder: (_) =>
+                  LevelSelectScreen(onLevelSelected: _startNewGame),
             ))
                 .then((_) => _checkSavedGame()),
           ),
@@ -338,7 +343,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           gradient: outlined ? null : gradient,
           borderRadius: BorderRadius.circular(14),
           border: outlined
-              ? Border.all(color: AppColors.primary.withValues(alpha: 0.4), width: 1.5)
+              ? Border.all(
+              color: AppColors.primary.withValues(alpha: 0.4), width: 1.5)
               : null,
           boxShadow: outlined
               ? null
@@ -396,7 +402,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: AppColors.primary.withValues(alpha: 0.8), size: 20),
+            Icon(icon,
+                color: AppColors.primary.withValues(alpha: 0.8), size: 20),
             const SizedBox(width: 10),
             Text(
               label,
@@ -413,40 +420,69 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     );
   }
 
+  // ── FIXED: proper styled buttons instead of plain text links ──────────────
   Widget _buildBottomLinks() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildTextLink('ABOUT', () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const AboutScreen()),
-          );
-        }),
-        Container(
-          width: 1,
-          height: 14,
-          color: Colors.white.withValues(alpha: 0.15),
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-        ),
-        _buildTextLink('PRIVACY POLICY', () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const AboutScreen(showPrivacy: true)),
-          );
-        }),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32),
+      child: Row(
+        children: [
+          Expanded(
+            child: _buildInfoButton(
+              label: 'ABOUT',
+              icon: Icons.info_outline_rounded,
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const AboutScreen()),
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: _buildInfoButton(
+              label: 'PRIVACY',
+              icon: Icons.shield_outlined,
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (_) => const AboutScreen(showPrivacy: true)),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildTextLink(String label, VoidCallback onTap) {
+  Widget _buildInfoButton({
+    required String label,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
     return GestureDetector(
       onTap: onTap,
-      child: Text(
-        label,
-        style: TextStyle(
-          fontSize: 10,
-          letterSpacing: 2,
-          color: Colors.white.withValues(alpha: 0.3),
-          fontWeight: FontWeight.w600,
+      child: Container(
+        height: 44,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: AppColors.primary.withValues(alpha: 0.18),
+          ),
+          color: AppColors.primary.withValues(alpha: 0.04),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon,
+                color: AppColors.primary.withValues(alpha: 0.6), size: 15),
+            const SizedBox(width: 6),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 10,
+                letterSpacing: 2,
+                fontWeight: FontWeight.w700,
+                color: Colors.white.withValues(alpha: 0.45),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -455,5 +491,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
 class _Star {
   final double x, y, size, opacity;
-  const _Star({required this.x, required this.y, required this.size, required this.opacity});
+  const _Star(
+      {required this.x,
+        required this.y,
+        required this.size,
+        required this.opacity});
 }
