@@ -130,7 +130,7 @@ class _AboutScreenState extends State<AboutScreen> {
           Container(height: 1, color: Colors.white.withOpacity(0.08)),
           const SizedBox(height: 14),
           Text(
-            'LIAME LLC',
+            'LIAME LLC HUB',
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w700,
@@ -380,7 +380,7 @@ class _AboutScreenState extends State<AboutScreen> {
 
   List<Widget> _developerInfo() {
     return [
-      _devRow('Developer', 'LIAME LLC'),
+      _devRow('Developer', 'LIAME LLC HUB'),
       _devRow('Contact', 'geraldedwardhines1@gmail.com'),
 
     ];
